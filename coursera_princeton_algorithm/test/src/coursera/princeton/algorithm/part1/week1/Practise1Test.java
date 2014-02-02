@@ -6,6 +6,6 @@ public class Practise1Test {
 
 	@Test
 	public void test(){
-		
+		//test
 	}
 }
