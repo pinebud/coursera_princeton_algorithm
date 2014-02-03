@@ -1,0 +1,5 @@
+I. Questions:
+- In Quick Union demo, why union(5,4) do nothing?
+
+II. To do further investigation:
+- Need to know how do the time efforts of QF, QU, WQU, PCQU, WPCQU be computed.
