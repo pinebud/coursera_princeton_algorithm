@@ -1,6 +1,6 @@
 package coursera.princeton.algorithm.part1.week1;
 
-public class UF implements ISet<Integer, Integer> {
+public class UFQuickFind implements IUF<Integer, Integer> {
     Integer[] set = null;
     int size = 0;
 
