@@ -54,4 +54,30 @@ public class UFBasicTest {
         
      }
 
+    /*
+     * 
+     * 
+1 2 3 4 5 6
+
+N=6£¬ log6 = 2
+
+Case 1:
+u(1,3) u(1,4), u(2,5), u(1,5), u(1,6)
+
+WQUnion
+ 1
+3 4 2 5 6
+
+WQUnionwithPathCompression
+1
+3 4 2 6
+     5
+
+
+Case 2:
+u(1,3) u(1,4), u(2,5), u(2,6), u(1,2)
+ 1
+3 4  2
+    5 6
+     */
 }
