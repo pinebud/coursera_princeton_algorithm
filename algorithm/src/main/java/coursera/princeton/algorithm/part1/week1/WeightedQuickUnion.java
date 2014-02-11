@@ -11,6 +11,7 @@ public class WeightedQuickUnion implements IUF<Integer, Integer> {
      */
 	@Override
 	public void init(int size) {
+		whoAmI();
 		this.size = size;
         set = new Integer[size];
         treeSizeArray = new Integer[size];
@@ -18,6 +19,10 @@ public class WeightedQuickUnion implements IUF<Integer, Integer> {
             set[i] = i;
             treeSizeArray[i] = 1;
         }	
+	}
+	
+	protected void whoAmI(){
+		System.out.println("WQUnion");
 	}
 
 	/**

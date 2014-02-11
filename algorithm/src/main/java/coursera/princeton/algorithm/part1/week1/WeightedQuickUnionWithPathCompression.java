@@ -2,9 +2,11 @@ package coursera.princeton.algorithm.part1.week1;
 
 public class WeightedQuickUnionWithPathCompression extends WeightedQuickUnion {
 
+	/**
+	 * 3logN
+	 */
 	@Override
 	public void union(Integer a, Integer b) {
-		System.out.println("With Path Compression");
 		Integer rootA = root(a);
 		Integer rootB = root(b);
 		if(rootA==rootB) return;
@@ -27,4 +29,8 @@ public class WeightedQuickUnionWithPathCompression extends WeightedQuickUnion {
 		}		
 	}
 
+	@Override
+	protected void whoAmI(){
+		System.out.println("WQUnionWithPC");
+	}
 }

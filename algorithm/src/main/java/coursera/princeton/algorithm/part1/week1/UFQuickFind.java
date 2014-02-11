@@ -5,6 +5,7 @@ public class UFQuickFind implements IUF<Integer, Integer> {
     int size = 0;
 
     public void init(int size) {
+    	System.out.println("QFind");
         this.size = size;
         set = new Integer[size];
         for (int i = 0; i < size; i++) {
