@@ -70,4 +70,21 @@ public class WeightedQuickUnion implements IUF<Integer, Integer> {
 		}
 		return r;
 	}
+	
+	@Override
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		sb.append("set=[");
+		for(Integer ele:set){
+			sb.append(ele+",");
+		}
+		int len = sb.length();
+		sb.replace(len-1, len, "]; treeSizes=[");
+		for(Integer ele:treeSizeArray){
+			sb.append(ele+",");
+		}
+		sb.append("]");
+		return sb.toString();
+		
+	}
 }

@@ -12,19 +12,21 @@ public class WeightedQuickUnionWithPathCompression extends WeightedQuickUnion {
 		if(rootA==rootB) return;
 		if(treeSizeArray[rootA]<treeSizeArray[rootB]){ //let rootB as the new root
 			Integer ele = a;
-			while(ele!=rootA){//path compression
+			do{//path compression
 				Integer parent = set[ele];
 				set[ele]=rootB;
 				ele = parent;
-			}
+			}while(ele!=rootA);
+			set[rootA] = rootB;
 			treeSizeArray[rootB] = treeSizeArray[rootA]+treeSizeArray[rootB];
 		}else{// let rootA as the new root
 			Integer ele = b;
-			while(ele!=rootB){//path compression
+			do{//path compression
 				Integer parent = set[ele];
 				set[ele]=rootA;
 				ele = parent;
-			}
+			}while(ele!=rootB);
+			set[rootB] = rootA;
 			treeSizeArray[rootA] = treeSizeArray[rootA]+treeSizeArray[rootB];
 		}		
 	}
