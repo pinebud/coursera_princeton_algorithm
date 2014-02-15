@@ -59,7 +59,7 @@ public class ValidateStackOutput {
 		return true;
 	}
 
-	@Test
+//	@Test
 	public void test() {		
 		Assert.assertFalse(validate(new int[]{4,6,5,3,2,8,1,7,9,0}));
 		Assert.assertTrue(validate(new int[]{5,4,3,2,1,0,6,7,8,9}));
