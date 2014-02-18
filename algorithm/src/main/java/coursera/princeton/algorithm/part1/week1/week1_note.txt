@@ -1,7 +1,18 @@
 I. Questions:
 - In Quick Union demo, why union(5,4) do nothing?
-- (Henrik) The algorithm will check the conectivity between 5 and 4 and if they were connected then the loop will skip.
+ (Henrik) The algorithm will check the conectivity between 5 and 4 and if they were connected then the loop will skip.
+
+- In the Weighted Quick Union with path compression(WQUPC) part, what is amortized analysis? How to understand that WQUPC is a linear algorithm c(N + Mlg*N) ?
+
+- And what is lg*N (i.e. Iterated log N)?
+ (Henrik) (2^0 = (1) , 2^(1) = (2), 2^(2) = (4), 2^(4) = (16), 2^(16) = 25536.... ) and related lg*N sequence is (1, 2, 3, 4, 5 .....) 
 
 II. To do further investigation:
 - Need to know how do the time efforts of QF, QU, WQU, PCQU, WPCQU be computed.
-- Try empirical analysis for our practice program.
+
+III. Update unit test framework.
+1.  Use an autowired list to hold all IUF type beans then iterate the list for testing.
+    Autowired(required = false)
+    private List<IUF> unionFindMethods;
+2.  Move the test bean definition file from source folder i.e. src/main/java/week1-appContext.xml to test resource folder i.e. src/test/resources/coursera/princeton/algorithm/part1/week1/UFBasicTest-context.xml. 
+3.  Use @ContextConfiguration to replace the way of directly calling ApplicationContext, since only beans inside context is what we cared about, not the context itself. 

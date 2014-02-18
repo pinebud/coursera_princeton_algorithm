@@ -1,10 +1,11 @@
 package coursera.princeton.algorithm.part1.week1;
 
-public class UF implements ISet<Integer, Integer> {
+public class UFQuickFind implements IUF<Integer, Integer> {
     Integer[] set = null;
     int size = 0;
 
     public void init(int size) {
+    	System.out.println("QuickFind");
         this.size = size;
         set = new Integer[size];
         for (int i = 0; i < size; i++) {
