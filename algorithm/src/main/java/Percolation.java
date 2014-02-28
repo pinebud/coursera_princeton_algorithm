@@ -1,5 +1,4 @@
 
-
 public class Percolation {
 	private int N = 0;
 	
@@ -9,6 +8,9 @@ public class Percolation {
 	
 	private boolean isPercolated = false;
 	
+	/*
+	 * O(N^2)
+	 */
 	public Percolation(int N) {
 		this.N = N;
 		// create N-by-N grid, with all sites blocked
@@ -25,26 +27,53 @@ public class Percolation {
 	public void open(int i, int j) {
 		int curIndex = j*N+i;
 		// open site (row i, column j) if it is not already
+		int top = (j>0?j-1:j)*N+i;
+		int bottom = (j<N-1?j+1:j)*N+i;
+		int left = j*N+(i>0?i-1:i);
+		int right = j*N+(i<N-1?i+1:i);
+		
+		if(isOpen(top))
+			wqu.union(top,curIndex);
+		if(isOpen(bottom))
+			wqu.union(bottom,curIndex);
+		if(isOpen(left))
+			wqu.union(left,curIndex);
+		if(isOpen(right))
+			wqu.union(right,curIndex);
+
 		site1DimensionArray[curIndex] = 1;
-		if(j==N-1&&isFull(i,j)){
+
+		if(isFull(i,j)&&isConnectedToBottom(i,j)){			
 			isPercolated = true;
 		}
-		int top = j>0?j-1:j;
-		int bottom = j<N-1?j+1:j;
-		int left = i>0?i-1:i;
-		int right = i<N-1?i+1:i;
-		
-		wqu.union(top*N+i,curIndex);
-		wqu.union(bottom*N+i,curIndex);
-		wqu.union(j*N+left,curIndex);
-		wqu.union(j*N+right,curIndex);
 	}
 
 	public boolean isOpen(int i, int j) {
 		// is site (row i, column j) open?
 		return site1DimensionArray[j*N+i] == 1;
 	}
+	
+	private boolean isOpen(int index){
+		return site1DimensionArray[index] == 1;
+	}
+	
+	private boolean isConnectedToBottom(int i, int j){
+		if(!isOpen(i,j))
+			return false;
+		if(j==N-1)
+			return true;
+		int curIndex = j*N+i;
+		int base = N*N-N;
+		for(int k=0;k<N;k++){
+			if(wqu.connected(curIndex, base+k))
+				return true;
+		}
+		return false;
+	}
 
+	/*
+	 * O(N)
+	 */
 	public boolean isFull(int i, int j) {
 		// is site (row i, column j) full?
 		if(!isOpen(i,j))
@@ -56,8 +85,7 @@ public class Percolation {
 			if(wqu.connected(curIndex, k))
 				return true;
 		}
-		return false;
-		
+		return false;		
 	}
 
 	public boolean percolates() {

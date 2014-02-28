@@ -4,12 +4,20 @@ public class PercolationStats {
 	
 	private double[] results = null;
 	
+	private double mean = 0.0d;
+	
+	private double stddev = 0.0d;
+	
+	private double conflo = 0.0d;
+	
+	private double confhi = 0.0d;
+	
 	public PercolationStats(int N, int T) {
 		results = new double[T];
-	    int totalSites = N*N;
+	    double totalSites = N*N;
 		// perform T independent computational experiments on an N-by-N grid
 		for(int t=0;t<T;t++){
-			int cntOfOpenSites = 0;
+			long cntOfOpenSites = 0;
 			Percolation perc = new Percolation(N);
 			while(!perc.percolates()){
 				int rdm_i = StdRandom.uniform(N);
@@ -19,34 +27,39 @@ public class PercolationStats {
 					cntOfOpenSites++;
 				}
 			}
-			results[t] = cntOfOpenSites/totalSites;
+			results[t] = (double)cntOfOpenSites/totalSites;
 		}
+		mean = StdStats.mean(results);
+		stddev = StdStats.stddev(results);
+		conflo = mean-1.96*stddev/Math.sqrt(T);
+		confhi = mean+1.96*stddev/Math.sqrt(T);
 	}
 
 	public double mean() {
 		// sample mean of percolation threshold
-		return StdStats.mean(results);
+		return mean;
 	}
 
 	public double stddev() {
 		// sample standard deviation of percolation threshold
-		return StdStats.stddev(results);
+		return stddev;
 	}
 
 	public double confidenceLo() {
 		// returns lower bound of the 95% confidence interval
-		return 0;
+		return conflo;
 	}
 
 	public double confidenceHi() {
 		// returns upper bound of the 95% confidence interval
-		return 0;
+		return confhi;
 	}
 
 	public static void main(String[] args) {
 		// test client, described below
-		PercolationStats instance = new PercolationStats(10,10);
-		StdOut.println(instance.mean());
-		StdOut.println(instance.stddev());
+		PercolationStats instance = new PercolationStats(200,100);
+		StdOut.println("mean\t=\t"+instance.mean());
+		StdOut.println("stddev\t=\t"+instance.stddev());
+		StdOut.println("95% confidence interval\t=\t"+instance.confidenceLo()+","+instance.confidenceHi());
 	}
 }
