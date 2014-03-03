@@ -1,38 +1,38 @@
-
-
 public class PercolationStats {
-	
+
 	private double[] results = null;
-	
+
 	private double mean = 0.0d;
-	
+
 	private double stddev = 0.0d;
-	
+
 	private double conflo = 0.0d;
-	
+
 	private double confhi = 0.0d;
-	
+
 	public PercolationStats(int N, int T) {
+		if (N <= 0 || T <= 0)
+			throw new java.lang.IllegalArgumentException();
 		results = new double[T];
-	    double totalSites = N*N;
+		double totalSites = N * N;
 		// perform T independent computational experiments on an N-by-N grid
-		for(int t=0;t<T;t++){
+		for (int t = 0; t < T; t++) {
 			long cntOfOpenSites = 0;
 			Percolation perc = new Percolation(N);
-			while(!perc.percolates()){
-				int rdm_i = StdRandom.uniform(N);
-				int rdm_j = StdRandom.uniform(N);
-				if(!perc.isOpen(rdm_i, rdm_j)){
-					perc.open(rdm_i,rdm_j);
+			while (!perc.percolates()) {
+				int rdmI = StdRandom.uniform(N);
+				int rdmJ = StdRandom.uniform(N);
+				if (!perc.isOpen(rdmI, rdmJ)) {
+					perc.open(rdmI, rdmJ);
 					cntOfOpenSites++;
 				}
 			}
-			results[t] = (double)cntOfOpenSites/totalSites;
+			results[t] = (double) cntOfOpenSites / totalSites;
 		}
 		mean = StdStats.mean(results);
 		stddev = StdStats.stddev(results);
-		conflo = mean-1.96*stddev/Math.sqrt(T);
-		confhi = mean+1.96*stddev/Math.sqrt(T);
+		conflo = mean - 1.96 * stddev / Math.sqrt(T);
+		confhi = mean + 1.96 * stddev / Math.sqrt(T);
 	}
 
 	public double mean() {
@@ -57,9 +57,13 @@ public class PercolationStats {
 
 	public static void main(String[] args) {
 		// test client, described below
-		PercolationStats instance = new PercolationStats(200,100);
-		StdOut.println("mean\t=\t"+instance.mean());
-		StdOut.println("stddev\t=\t"+instance.stddev());
-		StdOut.println("95% confidence interval\t=\t"+instance.confidenceLo()+","+instance.confidenceHi());
+		int N = StdIn.readInt();
+		int T = StdIn.readInt();
+		PercolationStats instance = new PercolationStats(N, T);
+		StdOut.println("mean\t=\t" + instance.mean());
+		StdOut.println("stddev\t=\t" + instance.stddev());
+		StdOut.println("95% confidence interval\t=\t" 
+				+ instance.confidenceLo()
+				+ "," + instance.confidenceHi());
 	}
 }
