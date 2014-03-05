@@ -20,8 +20,8 @@ public class PercolationStats {
 			long cntOfOpenSites = 0;
 			Percolation perc = new Percolation(N);
 			while (!perc.percolates()) {
-				int rdmI = StdRandom.uniform(N);
-				int rdmJ = StdRandom.uniform(N);
+				int rdmI = StdRandom.uniform(N) + 1;
+				int rdmJ = StdRandom.uniform(N) + 1;
 				if (!perc.isOpen(rdmI, rdmJ)) {
 					perc.open(rdmI, rdmJ);
 					cntOfOpenSites++;
@@ -57,13 +57,13 @@ public class PercolationStats {
 
 	public static void main(String[] args) {
 		// test client, described below
-		int N = StdIn.readInt();
-		int T = StdIn.readInt();
-		PercolationStats instance = new PercolationStats(N, T);
+		int N = Integer.valueOf(args[0]);
+		int T = Integer.valueOf(args[1]);
+		// PercolationStats instance = new PercolationStats(N, T);
+		PercolationStats instance = new PercolationStats(200, 100);
 		StdOut.println("mean\t=\t" + instance.mean());
 		StdOut.println("stddev\t=\t" + instance.stddev());
-		StdOut.println("95% confidence interval\t=\t" 
-				+ instance.confidenceLo()
+		StdOut.println("95% confidence interval\t=\t" + instance.confidenceLo()
 				+ "," + instance.confidenceHi());
 	}
 }
