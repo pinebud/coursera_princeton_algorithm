@@ -3,6 +3,10 @@ public class Percolation {
     private WeightedQuickUnionUF wqu = null;
     private int[] site1DimensionArray = null;
     private boolean isPercolated = false;
+    private final int BLOCKED = 0;
+    private final int OPEN = 1;
+    private final int FULL = 2;
+    private final int CONNECT_TOBOTTOM = 4;
 
     /**
      * O(N^2)
@@ -17,7 +21,7 @@ public class Percolation {
         site1DimensionArray = new int[lengthOf1DArray];
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                site1DimensionArray[j * N + i] = 0;
+                site1DimensionArray[j * N + i] = BLOCKED;
             }
         }
     }
@@ -30,6 +34,7 @@ public class Percolation {
      *            : from 1 to N
      */
     public void open(int row, int col) {
+        // open site (row i, column j) if it is not already
 
         if (isOpen(row, col)) {
             return;
@@ -38,7 +43,7 @@ public class Percolation {
         validate(row, col);
 
         int curIndex = (row - 1) * nsize + col - 1;
-        // open site (row i, column j) if it is not already
+        site1DimensionArray[curIndex] = OPEN;
 
         // int top = (j > 0 ? j - 1 : j) * n + i;
         // int bottom = (j < n - 1 ? j + 1 : j) * n + i;
@@ -50,22 +55,56 @@ public class Percolation {
         int left = (row - 1) * nsize + col - 2;
         int right = (row - 1) * nsize + col;
 
+        boolean isFull = false;
+        boolean isConnectToBottom = false;
+        if (row == 1) {
+            isFull = true;
+        }
+        if (row == nsize) {
+            isConnectToBottom = true;
+        }
+
         if (row > 1 && isOpen(top)) {
-            wqu.union(top, curIndex);
+            int status = percolate(top, curIndex);
+            if (status == FULL) {
+                isFull = true;
+            } else if (status == CONNECT_TOBOTTOM) {
+                isConnectToBottom = true;
+            }
         }
         if (row < nsize && isOpen(bottom)) {
-            wqu.union(bottom, curIndex);
+            int status = percolate(bottom, curIndex);
+            if (status == FULL) {
+                isFull = true;
+            } else if (status == CONNECT_TOBOTTOM) {
+                isConnectToBottom = true;
+            }
         }
         if (col > 1 && isOpen(left)) {
-            wqu.union(left, curIndex);
+            int status = percolate(left, curIndex);
+            if (status == FULL) {
+                isFull = true;
+            } else if (status == CONNECT_TOBOTTOM) {
+                isConnectToBottom = true;
+            }
         }
         if (col < nsize && isOpen(right)) {
-            wqu.union(right, curIndex);
+            int status = percolate(right, curIndex);
+            if (status == FULL) {
+                isFull = true;
+            } else if (status == CONNECT_TOBOTTOM) {
+                isConnectToBottom = true;
+            }
         }
 
-        site1DimensionArray[curIndex] = 1;
+        int groupId = wqu.find(curIndex);
+        if (isFull) {
+            site1DimensionArray[groupId] = FULL;
+        } else if (isConnectToBottom) {
+            site1DimensionArray[groupId] = CONNECT_TOBOTTOM;
+        }
 
-        if (isFull(row, col) && isConnectedToBottom(row, col)) {
+        if (isFull && isConnectToBottom) {
             isPercolated = true;
         }
     }
@@ -82,51 +121,28 @@ public class Percolation {
         // is site (row i, column j) open?
         validate(row, col);
 
-        return site1DimensionArray[(row - 1) * nsize + col - 1] == 1;
+        return site1DimensionArray[(row - 1) * nsize + col - 1] != BLOCKED;
     }
 
     private boolean isOpen(int index) {
-        return site1DimensionArray[index] == 1;
-    }
-
-    private boolean isConnectedToBottom(int row, int col) {
-        if (!isOpen(row, col)) {
-            return false;
-        }
-        if (row == nsize) {
-            return true;
-        }
-        int curIndex = (row - 1) * nsize + col - 1;
-        int base = nsize * nsize - nsize;
-        for (int k = 0; k < nsize; k++) {
-            if (wqu.connected(curIndex, base + k)) {
-                return true;
-            }
-        }
-        return false;
+        return site1DimensionArray[index] != BLOCKED;
     }
 
     /*
      * O(N)
      */
     public boolean isFull(int row, int col) {
+        // is site (row i, column j) full?
 
         validate(row, col);
 
-        // is site (row i, column j) full?
         if (!isOpen(row, col)) {
             return false;
         }
-        if (row == 1) {
-            return true;
-        }
+
         int curIndex = (row - 1) * nsize + col - 1;
-        for (int k = 0; k < nsize; k++) {
-            if (wqu.connected(curIndex, k)) {
-                return true;
-            }
-        }
-        return false;
+
+        return site1DimensionArray[wqu.find(curIndex)] == FULL;
     }
 
     public boolean percolates() {
@@ -137,6 +153,12 @@ public class Percolation {
     private void validate(int row, int col) {
         if (row < 1 || row > nsize || col < 1 || col > nsize)
             throw new IndexOutOfBoundsException();
+    }
+
+    private int percolate(int openedSite, int closedSite) {
+        int groupId = wqu.find(openedSite);
+        wqu.union(openedSite, closedSite);
+        return site1DimensionArray[groupId];
     }
 
 }

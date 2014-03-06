@@ -2,11 +2,8 @@ public class PercolationStats {
     private double[] results = null;
 
     private double mean = 0.0d;
-
     private double stddev = 0.0d;
-
     private double conflo = 0.0d;
-
     private double confhi = 0.0d;
 
     public PercolationStats(int N, int T) {
