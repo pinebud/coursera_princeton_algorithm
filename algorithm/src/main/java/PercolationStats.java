@@ -18,10 +18,8 @@ public class PercolationStats {
             while (!perc.percolates()) {
                 int rdmI = StdRandom.uniform(N) + 1;
                 int rdmJ = StdRandom.uniform(N) + 1;
-                if (!perc.isOpen(rdmI, rdmJ)) {
-                    perc.open(rdmI, rdmJ);
-                    cntOfOpenSites++;
-                }
+                perc.open(rdmI, rdmJ);
+                cntOfOpenSites++;
             }
             results[t] = (double) cntOfOpenSites / totalSites;
         }
