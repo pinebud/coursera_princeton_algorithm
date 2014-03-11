@@ -1,3 +1,6 @@
+package coursera.princeton.algorithm.part1.week2.assignment;
+
+import edu.princeton.cs.introcs.*;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 

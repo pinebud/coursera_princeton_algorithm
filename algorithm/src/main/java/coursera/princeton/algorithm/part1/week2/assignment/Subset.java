@@ -1,3 +1,7 @@
+package coursera.princeton.algorithm.part1.week2.assignment;
+
+import edu.princeton.cs.introcs.*;
+
 public class Subset {
 	public static void main(String[] args) {
 		int subsetSize = Integer.valueOf(args[0]);
