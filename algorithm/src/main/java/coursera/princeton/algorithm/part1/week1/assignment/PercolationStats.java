@@ -1,3 +1,6 @@
+package coursera.princeton.algorithm.part1.week1.assignment;
+import edu.princeton.cs.introcs.*;
+
 public class PercolationStats {
     private double[] results = null;
 

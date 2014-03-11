@@ -1,3 +1,6 @@
+package coursera.princeton.algorithm.part1.week1.assignment;
+import edu.princeton.cs.algs4.WeightedQuickUnionUF;
+
 public class Percolation {
     enum Status {
         BLOCKED, OPEN, FULL, CONNECT_TOBOTTOM, PERCOLATED

@@ -2,6 +2,8 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
+import coursera.princeton.algorithm.part1.week1.assignment.Percolation;
+
 public class PercolationTest {
 
     @Test
