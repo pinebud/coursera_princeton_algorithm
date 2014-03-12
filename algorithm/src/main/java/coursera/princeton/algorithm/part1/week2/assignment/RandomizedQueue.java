@@ -150,7 +150,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 		// sample test.
 		StdOut.println("sample for the first time is " + rqueue.sample());
 		StdOut.println("sample for the second time is " + rqueue.sample());
-		
+
 		// size() test.
 		StdOut.println("Size of randomized queue is " + rqueue.size());
 

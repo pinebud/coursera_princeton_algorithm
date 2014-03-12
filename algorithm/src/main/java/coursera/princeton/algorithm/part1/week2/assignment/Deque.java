@@ -1,4 +1,4 @@
-import java.util.Iterator;
+mport java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
@@ -28,11 +28,11 @@ public class Deque<Item> implements Iterable<Item> {
 	}
 
 	private class DequeIterator implements Iterator<Item> {
-		Node cur = first;
+		Node cur = first.next;
 
 		@Override
 		public boolean hasNext() {
-			return (null != cur);
+			return (last != cur);
 		}
 
 		@Override
@@ -55,7 +55,9 @@ public class Deque<Item> implements Iterable<Item> {
 	 */
 	public Deque() {
 		N = 0;
-		first = last = null;
+		first = new Node(null, null, null);
+		last = new Node(null, first, null);
+		first.next = last;
 	}
 
 	/**
@@ -86,13 +88,9 @@ public class Deque<Item> implements Iterable<Item> {
 	public void addFirst(Item item) throws NullPointerException {
 		if (null == item)
 			throw new NullPointerException();
-		if (0 == N) {
-			first = new Node(item, null, null);
-			last = first;
-		} else {
-			first.pre = new Node(item, null, first);
-			first = first.pre;
-		}
+		Node n = first.next;
+		first.next = new Node(item, first, n);
+		n.pre = first.next;
 		N++;
 	}
 
@@ -106,13 +104,9 @@ public class Deque<Item> implements Iterable<Item> {
 	public void addLast(Item item) throws NullPointerException {
 		if (null == item)
 			throw new NullPointerException();
-		if (0 == N) {
-			last = new Node(item, null, null);
-			first = last;
-		} else {
-			last.next = new Node(item, last, null);
-			last = last.next;
-		}
+		Node n = last.pre;
+		last.pre = new Node(item, n, last);
+		n.next = last.pre;
 		N++;
 	}
 
@@ -125,14 +119,12 @@ public class Deque<Item> implements Iterable<Item> {
 	public Item removeFirst() {
 		if (0 == N)
 			throw new NoSuchElementException();
-		Node oldFirst = first;
+		Node n = first.next;
+		
 		// Copy
-		Item ret = oldFirst.item;
-		first = oldFirst.next;
-
-		// Deref to avoid loitering
-		if (first != null)
-			first.pre = null;
+		Item ret = n.item;
+		first.next = n.next;
+		n.next.pre = first;
 
 		N--;
 		return ret;
@@ -147,15 +139,13 @@ public class Deque<Item> implements Iterable<Item> {
 	public Item removeLast() {
 		if (0 == N)
 			throw new NoSuchElementException();
-		Node oldLast = last;
+		Node n = last.pre;
 
-		Item ret = oldLast.item;
-		last = oldLast.pre;
-
-		// Deref to avoid loitering
-		if (last != null)
-			last.next = null;
-
+		// Copy
+		Item ret = n.item;
+		last.pre = n.pre;
+		n.pre.next = last;
+		
 		N--;
 		return ret;
 	}
