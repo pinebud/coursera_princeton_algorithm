@@ -1,3 +1,4 @@
+package coursera.princeton.algorithm.part1.week1;
 import junit.framework.Assert;
 
 import org.junit.Test;
