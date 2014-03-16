@@ -22,13 +22,17 @@ public class PointTest {
     @Test
     public void testSlopeTo(){
         Point p = new Point(1,1);
-        Point p1 = new Point(2,2);
-        Point p_horizontal = new Point(2,1);
-        Point p_vertical = new Point(1,2);
-        Assert.assertEquals((double)1.0, p.slopeTo(p1), 0.00001);
-        Assert.assertEquals((double)0.0, p.slopeTo(p_horizontal), 0.00001);
-        Assert.assertEquals(Double.POSITIVE_INFINITY, p.slopeTo(p_vertical), 0.00001);
         Assert.assertEquals(Double.NEGATIVE_INFINITY, p.slopeTo(p), 0.00001);
+        Point p1 = new Point(2,2);
+        Assert.assertEquals((double)1.0, p.slopeTo(p1), 0.00001);
+        Point p_horizontal = new Point(2,1);
+        Assert.assertEquals((double)0.0, p.slopeTo(p_horizontal), 0.00001);
+        Point p_vertical = new Point(1,2);
+        Assert.assertEquals(Double.POSITIVE_INFINITY, p.slopeTo(p_vertical), 0.00001);
+        Point p2 = new Point(0,1);
+        Assert.assertEquals((double)0.0, p.slopeTo(p2), 0.00001);
+//        Assert.assertTrue((double)-0.0==(double)0.0);
+//        Assert.assertTrue(p.slopeTo(p2)<(double)0.0);
         
         Assert.assertTrue(Double.POSITIVE_INFINITY>Double.MAX_VALUE);
         Assert.assertTrue(Double.NEGATIVE_INFINITY<Double.MIN_VALUE);

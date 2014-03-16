@@ -1,8 +1,4 @@
-package coursera.princeton.algorithm.part1.week3.assignment;
-
-import coursera.princeton.algorithm.util.Constants;
-import edu.princeton.cs.introcs.In;
-import edu.princeton.cs.introcs.StdDraw;
+import java.util.Arrays;
 
 public class Brute {
     public static void main(String[] args) {
@@ -10,7 +6,8 @@ public class Brute {
         StdDraw.setXscale(0, 32768);
         StdDraw.setYscale(0, 32768);
 
-//      In in = new In(Constants.MY_INPUT_FILE);
+        // In in = new In(
+        // coursera.princeton.algorithm.util.Constants.INPUT6_FILE);
         String filename = args[0];
         In in = new In(filename);
         int N = in.readInt();
@@ -34,12 +31,21 @@ public class Brute {
                     Point r = points[k];
                     for (int l = k + 1; l < N; l++) {
                         Point s = points[l];
-                        double slope_pq = p.slopeTo(q);
-                        double slope_pr = p.slopeTo(r);
-                        double slopw_ps = p.slopeTo(s);
-                        if (slope_pq == slope_pr && slope_pq == slopw_ps) {
-                            System.out.println(p + " -> " + q + " -> " + r
-                                    + " -> " + s);
+                        double slopepq = p.slopeTo(q);
+                        double slopepr = p.slopeTo(r);
+                        double slopwps = p.slopeTo(s);
+                        if (slopepq == slopepr && slopepq == slopwps) {
+                            Point[] lineSegment = new Point[4];
+                            lineSegment[0] = p;
+                            lineSegment[1] = q;
+                            lineSegment[2] = r;
+                            lineSegment[3] = s;
+                            Arrays.sort(lineSegment);
+                            for (int h = 0; h < 3; h++) {
+                                System.out.print(lineSegment[h] + " -> ");
+                            }
+                            System.out.println(lineSegment[3]);
+                            lineSegment[0].drawTo(lineSegment[3]);
                         }
                     }
                 }

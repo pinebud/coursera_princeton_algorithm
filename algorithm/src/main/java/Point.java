@@ -1,4 +1,4 @@
-package coursera.princeton.algorithm.part1.week3.assignment;
+
 
 /*************************************************************************
  * Name:
@@ -12,8 +12,6 @@ package coursera.princeton.algorithm.part1.week3.assignment;
  *
  *************************************************************************/
 import java.util.Comparator;
-
-import edu.princeton.cs.introcs.StdDraw;
 
 public class Point implements Comparable<Point> {
     private final int x;
@@ -89,12 +87,12 @@ public class Point implements Comparable<Point> {
         }
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof Point) {
-            Point p = (Point) o;
-            return p.x == x && p.y == y;
-        }
-        return false;
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (o instanceof Point) {
+//            Point p = (Point) o;
+//            return p.x == x && p.y == y;
+//        }
+//        return false;
+//    }
 }
