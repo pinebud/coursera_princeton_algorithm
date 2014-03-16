@@ -1,4 +1,5 @@
 package coursera.princeton.algorithm.part1.week3.assignment;
+
 /*************************************************************************
  * Name:
  * Email:
@@ -23,12 +24,12 @@ public class Point implements Comparable<Point> {
         @Override
         public int compare(Point o1, Point o2) {
             double slope1 = slopeTo(o1);
-            double slope2 = slopeTo(o2);            
-            if(slope1<slope2){
+            double slope2 = slopeTo(o2);
+            if (slope1 < slope2) {
                 return -1;
-            }else if(slope1>slope2){
+            } else if (slope1 > slope2) {
                 return 1;
-            }else{
+            } else {
                 return 0;
             }
         }
@@ -73,23 +74,23 @@ public class Point implements Comparable<Point> {
         }
     }
 
-    public double slopeTo(Point that) { 
+    public double slopeTo(Point that) {
         // the slope between this point and that point
-        if(x==that.x){
-            if(y==that.y)
-                return Double.NEGATIVE_INFINITY; //degenerate
+        if (x == that.x) {
+            if (y == that.y)
+                return Double.NEGATIVE_INFINITY; // degenerate
             else
-                return Double.POSITIVE_INFINITY; //Vertical
-        }else{
-            return (that.y-y)/(that.x-x);
+                return Double.POSITIVE_INFINITY; // Vertical
+        } else {
+            return ((double) (that.y - y)) / (that.x - x);
         }
     }
-    
+
     @Override
-    public boolean equals(Object o){
-        if(o instanceof Point){
-            Point p = (Point)o;
-            return p.x == x && p.y==y;
+    public boolean equals(Object o) {
+        if (o instanceof Point) {
+            Point p = (Point) o;
+            return p.x == x && p.y == y;
         }
         return false;
     }
